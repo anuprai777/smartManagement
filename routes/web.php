@@ -14,14 +14,13 @@ Route::get('/', function () {
 });
 
 Route::get('/events/browse', [EventController::class, 'browse'])->name('events.browse');
-Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Events management
+    // Events management (except show — defined below so it doesn't catch /create etc.)
     Route::resource('events', EventController::class)->except(['show']);
     Route::patch('/events/{event}/publish', [EventController::class, 'publish'])->name('events.publish');
 
@@ -47,6 +46,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
     Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllRead');
 });
+
+// Public event detail (placed AFTER resource routes so /events/create matches the resource route first)
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
 // Authentication routes (login/register)
 Route::middleware('guest')->group(function () {
