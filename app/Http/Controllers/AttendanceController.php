@@ -27,16 +27,11 @@ class AttendanceController extends Controller
             'qr_data' => 'required|string',
         ]);
 
+        // Try to parse as QR data (JSON) first, then fall back to direct ticket number
         $qrData = json_decode($request->qr_data, true);
+        $ticketNumber = $qrData && isset($qrData['ticket']) ? $qrData['ticket'] : trim($request->qr_data);
 
-        if (!$qrData || !isset($qrData['ticket'])) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid QR code format.',
-            ]);
-        }
-
-        $ticket = Ticket::where('ticket_number', $qrData['ticket'])
+        $ticket = Ticket::where('ticket_number', $ticketNumber)
             ->with(['user', 'registration'])
             ->first();
 
@@ -99,6 +94,12 @@ class AttendanceController extends Controller
             ->latest()
             ->paginate(20);
 
-        return view('attendance.attendees', compact('event', 'attendees'));
+        $totalRegistered = Registration::where('event_id', $event->id)->count();
+        $totalAttended = Registration::where('event_id', $event->id)->where('status', 'attended')->count();
+        $totalPending = Registration::where('event_id', $event->id)->where('status', 'registered')->count();
+
+        return view('attendance.attendees', compact(
+            'event', 'attendees', 'totalRegistered', 'totalAttended', 'totalPending'
+        ));
     }
 }
