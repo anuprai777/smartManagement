@@ -21,11 +21,18 @@ class DatabaseSeeder extends Seeder
         $admin = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'is_admin' => true,
+        ]);
+
+        $admin2 = User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'is_admin' => true,
         ]);
 
         $users = User::factory(10)->create();
 
-        $allUsers = collect([$admin, ...$users]);
+        $allUsers = collect([$admin, $admin2, ...$users]);
 
         // ─── Events ─────────────────────────────────────────────────────
         // 5 events for the admin (various statuses)

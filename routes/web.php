@@ -50,6 +50,14 @@ Route::middleware('auth')->group(function () {
 // Public event detail (placed AFTER resource routes so /events/create matches the resource route first)
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
+// Admin routes
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/users', [\App\Http\Controllers\AdminController::class, 'users'])->name('users');
+    Route::patch('/users/{user}/toggle-admin', [\App\Http\Controllers\AdminController::class, 'toggleAdmin'])->name('users.toggleAdmin');
+    Route::delete('/users/{user}', [\App\Http\Controllers\AdminController::class, 'deleteUser'])->name('users.delete');
+});
+
 // Authentication routes (login/register)
 Route::middleware('guest')->group(function () {
     Route::get('/login', fn () => view('auth.login'))->name('login');
