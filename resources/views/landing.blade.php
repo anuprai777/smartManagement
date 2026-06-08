@@ -38,16 +38,19 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative overflow-hidden max-w-full">
+    <section class="relative overflow-hidden max-w-full min-h-[calc(100vh-4rem)] flex items-center">
         <!-- Background gradient -->
         <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-purple-50 pointer-events-none"></div>
         <div class="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 bg-indigo-200/30 rounded-full blur-3xl pointer-events-none max-sm:hidden"></div>
         <div class="absolute bottom-0 left-0 -translate-x-1/4 translate-y-1/4 w-96 h-96 bg-purple-200/30 rounded-full blur-3xl pointer-events-none max-sm:hidden"></div>
+        <div class="absolute top-1/3 left-1/4 -translate-x-1/2 w-72 h-72 bg-pink-200/20 rounded-full blur-3xl pointer-events-none max-sm:hidden"></div>
+        <div class="absolute bottom-1/4 right-1/3 w-64 h-64 bg-amber-200/25 rounded-full blur-3xl pointer-events-none max-sm:hidden"></div>
+        <div class="absolute top-1/2 left-2/3 w-48 h-48 bg-emerald-200/20 rounded-full blur-3xl pointer-events-none max-sm:hidden"></div>
 
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 w-full">
             <div class="max-w-3xl mx-auto text-center">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-100/80 text-indigo-700 rounded-full text-sm font-medium mb-6 shadow-sm">
-                    <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 rounded-full text-sm font-medium mb-6 shadow-sm border border-indigo-200/50">
+                    <span class="w-2 h-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full animate-pulse"></span>
                     Smart event management platform
                 </div>
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight">
@@ -82,7 +85,11 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-20 sm:py-28 bg-white border-y border-gray-100">
+    <section class="py-20 sm:py-28 bg-white relative overflow-hidden">
+        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-indigo-300 to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
+        <div class="absolute -left-32 top-1/2 w-64 h-64 bg-indigo-100/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -right-32 bottom-1/4 w-64 h-64 bg-purple-100/40 rounded-full blur-3xl pointer-events-none"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">Everything You Need</h2>
@@ -148,7 +155,9 @@
 
     <!-- Upcoming Events Section -->
     @if($upcomingEvents->isNotEmpty())
-    <section class="py-20 sm:py-28">
+    <section class="py-20 sm:py-28 relative overflow-hidden">
+        <div class="absolute -right-32 top-1/3 w-72 h-72 bg-amber-100/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-32 bottom-1/4 w-64 h-64 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12">
                 <div>
@@ -206,13 +215,17 @@
     @endif
 
     <!-- CTA Section -->
-    <section class="py-20 sm:py-28 bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-700 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-        <div class="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
-        <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl sm:text-4xl font-bold text-white">Ready to Simplify Your Event Management?</h2>
-            <p class="mt-4 text-lg text-indigo-200 max-w-2xl mx-auto">Join thousands of organizers who use SmartEvent to create, manage, and deliver amazing event experiences.</p>
-            <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+    <section class="py-28 sm:py-36 lg:py-52 bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-700 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+        <div class="absolute top-1/3 left-1/4 w-48 h-48 bg-pink-400/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-1/3 right-1/4 w-48 h-48 bg-amber-400/10 rounded-full blur-3xl"></div>
+        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">Ready to Simplify Your Event Management?</h2>
+            <p class="mt-5 text-lg sm:text-xl text-indigo-200 max-w-2xl mx-auto">Join thousands of organizers who use SmartEvent to create, manage, and deliver amazing event experiences.</p>
+            <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
                 @auth
                     <a href="{{ route('events.create') }}" class="inline-flex items-center gap-2 px-8 py-3 bg-white text-indigo-700 font-semibold rounded-xl hover:bg-indigo-50 transition shadow-lg">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
