@@ -115,6 +115,36 @@
                 @enderror
             </div>
 
+            <!-- Visibility -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-3">Event Visibility</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="relative flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50/50 has-[:checked]:ring-1 has-[:checked]:ring-indigo-500 border-gray-200 hover:border-gray-300">
+                        <input type="radio" name="visibility" value="public" class="sr-only" {{ old('visibility', $event->visibility) === 'public' ? 'checked' : '' }}>
+                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center has-[:checked]:border-indigo-500">
+                            <div class="w-2.5 h-2.5 rounded-full bg-indigo-500 hidden has-[:checked]:block"></div>
+                        </div>
+                        <div>
+                            <span class="block text-sm font-semibold text-gray-900">Public</span>
+                            <span class="block text-xs text-gray-500">Visible to everyone. Appears in browse and search.</span>
+                        </div>
+                    </label>
+                    <label class="relative flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50/50 has-[:checked]:ring-1 has-[:checked]:ring-indigo-500 border-gray-200 hover:border-gray-300">
+                        <input type="radio" name="visibility" value="private" class="sr-only" {{ old('visibility', $event->visibility) === 'private' ? 'checked' : '' }}>
+                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center has-[:checked]:border-indigo-500">
+                            <div class="w-2.5 h-2.5 rounded-full bg-indigo-500 hidden has-[:checked]:block"></div>
+                        </div>
+                        <div>
+                            <span class="block text-sm font-semibold text-gray-900">Private</span>
+                            <span class="block text-xs text-gray-500">Only accessible via direct link. Hidden from listings.</span>
+                        </div>
+                    </label>
+                </div>
+                @error('visibility')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
             <div class="flex items-center gap-4 pt-4 border-t border-gray-100">
                 <button type="submit" class="px-6 py-2.5 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
                     Update Event

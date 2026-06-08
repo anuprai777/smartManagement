@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $upcomingEvents = Event::published()
         ->upcoming()
+        ->public()
         ->withCount(['registrations' => fn ($q) => $q->where('status', 'registered')])
         ->latest('event_date')
         ->take(6)

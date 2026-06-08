@@ -31,6 +31,7 @@ class EventController extends Controller
             'event_date' => 'required|date|after:now',
             'registration_deadline' => 'nullable|date|before:event_date',
             'capacity' => 'required|integer|min:0',
+            'visibility' => 'required|in:public,private',
             'banner_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
@@ -80,6 +81,7 @@ class EventController extends Controller
             'registration_deadline' => 'nullable|date|before:event_date',
             'capacity' => 'required|integer|min:0',
             'status' => 'required|in:draft,published,completed,cancelled',
+            'visibility' => 'required|in:public,private',
             'banner_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
@@ -124,6 +126,7 @@ class EventController extends Controller
     {
         $events = Event::published()
             ->upcoming()
+            ->public()
             ->withCount('registrations')
             ->latest('event_date')
             ->paginate(12);

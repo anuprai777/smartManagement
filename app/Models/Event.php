@@ -20,6 +20,7 @@ class Event extends Model
         'registration_deadline',
         'capacity',
         'status',
+        'visibility',
         'banner_image',
     ];
 
@@ -28,6 +29,7 @@ class Event extends Model
         return [
             'event_date' => 'datetime',
             'registration_deadline' => 'datetime',
+            'visibility' => 'string',
         ];
     }
 
@@ -59,6 +61,36 @@ class Event extends Model
     public function scopeUpcoming($query)
     {
         return $query->where('event_date', '>=', now());
+    }
+
+    public function scopePublic($query)
+    {
+        return $query->where('visibility', 'public');
+    }
+
+    public function scopePrivate($query)
+    {
+        return $query->where('visibility', 'private');
+    }
+
+    public function scopeVisibleTo($query, $userId = null)
+    {
+        return $query->where(function ($q) use ($userId) {
+            $q->where('visibility', 'public');
+            if ($userId) {
+                $q->orWhere('user_id', $userId);
+            }
+        });
+    }
+
+    public function isPublic(): bool
+    {
+        return $this->visibility === 'public';
+    }
+
+    public function isPrivate(): bool
+    {
+        return $this->visibility === 'private';
     }
 
     public function registrationCount(): int
