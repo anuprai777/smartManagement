@@ -6,11 +6,19 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RegistrationController;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
 Route::get('/', function () {
-    return view('welcome');
+    $upcomingEvents = Event::published()
+        ->upcoming()
+        ->withCount(['registrations' => fn ($q) => $q->where('status', 'registered')])
+        ->latest('event_date')
+        ->take(6)
+        ->get();
+
+    return view('landing', compact('upcomingEvents'));
 });
 
 Route::get('/events/browse', [EventController::class, 'browse'])->name('events.browse');
