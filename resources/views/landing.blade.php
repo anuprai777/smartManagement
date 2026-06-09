@@ -38,7 +38,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative overflow-hidden max-w-full min-h-[calc(100vh-4rem)] flex items-center">
+    <section class="relative overflow-hidden min-h-screen-minus-nav flex items-center">
         <!-- Background gradient -->
         <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-purple-50 pointer-events-none"></div>
         <div class="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 bg-indigo-200/30 rounded-full blur-3xl pointer-events-none max-sm:hidden"></div>
