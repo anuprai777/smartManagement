@@ -40,8 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/registrations/{registration}/cancel', [RegistrationController::class, 'cancel'])->name('registrations.cancel');
 
     // Attendance / QR Scanning
-    Route::get('/events/{event}/scan', [AttendanceController::class, 'scanPage'])->name('attendance.scan');
-    Route::post('/events/{event}/verify', [AttendanceController::class, 'verifyTicket'])->name('attendance.verify');
+    Route::get('/scan', [AttendanceController::class, 'scanUniversal'])->name('attendance.scan');
+    Route::post('/scan/verify', [AttendanceController::class, 'verifyUniversal'])->name('attendance.verify');
+    Route::get('/events/{event}/scan', [AttendanceController::class, 'scanPage'])->name('attendance.scan.event');
+    Route::post('/events/{event}/verify', [AttendanceController::class, 'verifyTicket'])->name('attendance.verify.event');
     Route::get('/events/{event}/attendees', [AttendanceController::class, 'attendees'])->name('attendance.attendees');
 
     // Certificates

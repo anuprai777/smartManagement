@@ -33,10 +33,15 @@
     @else
     <div class="space-y-3">
         @foreach($notifications as $notification)
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition
-            @if($notification->unread()) border-l-4 border-l-indigo-500 @endif">
+        <div class="rounded-xl shadow-sm border p-5 transition
+            @if($notification->unread())
+                bg-white border-gray-200 hover:shadow-md border-l-4 border-l-indigo-500
+            @else
+                bg-gray-50/70 border-gray-100 opacity-70 hover:opacity-90
+            @endif">
             <div class="flex items-start gap-4">
                 <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0
+                    @if($notification->read()) opacity-50 @endif
                     @if($notification->type === 'App\Notifications\EventRegistrationNotification') bg-green-100
                     @elseif($notification->type === 'App\Notifications\CertificateIssuedNotification') bg-amber-100
                     @else bg-indigo-100 @endif">
@@ -57,10 +62,10 @@
                 <div class="flex-1 min-w-0">
                     <div class="flex items-start justify-between gap-2">
                         <div>
-                            <p class="text-sm font-medium text-gray-900">
+                            <p class="text-sm font-medium @if($notification->read()) text-gray-500 @else text-gray-900 @endif">
                                 {{ $notification->data['title'] ?? 'Notification' }}
                             </p>
-                            <p class="text-sm text-gray-500 mt-0.5">
+                            <p class="text-sm @if($notification->read()) text-gray-400 @else text-gray-500 @endif mt-0.5">
                                 {{ $notification->data['message'] ?? '' }}
                             </p>
                         </div>
@@ -72,9 +77,9 @@
                         @endif
                     </div>
                     <div class="flex items-center gap-3 mt-2">
-                        <span class="text-xs text-gray-400">{{ $notification->created_at->diffForHumans() }}</span>
+                        <span class="text-xs @if($notification->read()) text-gray-300 @else text-gray-400 @endif">{{ $notification->created_at->diffForHumans() }}</span>
                         @if(isset($notification->data['action_url']))
-                        <a href="{{ $notification->data['action_url'] }}" class="text-xs text-indigo-600 hover:text-indigo-800 font-medium">
+                        <a href="{{ $notification->data['action_url'] }}" class="text-xs @if($notification->read()) text-gray-400 @else text-indigo-600 hover:text-indigo-800 @endif font-medium">
                             View Details →
                         </a>
                         @endif
