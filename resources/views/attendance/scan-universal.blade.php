@@ -174,7 +174,7 @@ function startCamera(cameraId) {
     };
 
     html5QrCode.start(
-        { deviceId: { exact: cameraId } },
+        { deviceId: cameraId },
         config,
         onScanSuccess
     ).then(() => {
