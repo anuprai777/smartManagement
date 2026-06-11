@@ -41,8 +41,8 @@ class AttendanceController extends Controller
             ]);
         }
 
-        // Authorize: only the event organizer can verify tickets
-        if ($ticket->event->user_id !== auth()->id()) {
+        // Authorize: only the event organizer or admin can verify tickets
+        if ($ticket->event->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
             return response()->json([
                 'success' => false,
                 'message' => 'You are not authorized to verify tickets for this event.',
@@ -85,7 +85,7 @@ class AttendanceController extends Controller
 
     public function scanPage(Event $event)
     {
-        if ($event->user_id !== auth()->id()) {
+        if ($event->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
             abort(403);
         }
         return view('attendance.scan', compact('event'));
@@ -93,7 +93,7 @@ class AttendanceController extends Controller
 
     public function verifyTicket(Request $request, Event $event)
     {
-        if ($event->user_id !== auth()->id()) {
+        if ($event->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
             abort(403);
         }
 
@@ -159,7 +159,7 @@ class AttendanceController extends Controller
 
     public function attendees(Event $event)
     {
-        if ($event->user_id !== auth()->id()) {
+        if ($event->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
             abort(403);
         }
 

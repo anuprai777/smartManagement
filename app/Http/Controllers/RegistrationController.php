@@ -111,14 +111,14 @@ class RegistrationController extends Controller
 
     private function generateQrCode(Ticket $ticket): void
     {
-        $result = Builder::create()
-            ->writer(new PngWriter())
-            ->data($ticket->qr_code_data)
-            ->encoding(new Encoding('UTF-8'))
-            ->errorCorrectionLevel(new ErrorCorrectionLevel\ErrorCorrectionLevelHigh())
-            ->size(300)
-            ->margin(10)
-            ->build();
+        $result = (new Builder(
+            writer: new PngWriter(),
+            data: $ticket->qr_code_data,
+            encoding: new Encoding('UTF-8'),
+            errorCorrectionLevel: ErrorCorrectionLevel::High,
+            size: 300,
+            margin: 10,
+        ))->build();
 
         $filename = 'qr-codes/' . $ticket->ticket_number . '.png';
         \Illuminate\Support\Facades\Storage::disk('public')->put($filename, $result->getString());
