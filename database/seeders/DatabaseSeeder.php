@@ -30,38 +30,39 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true,
         ]);
 
-        $users = User::factory(10)->create();
+        // Create variety of users with different names for realism
+        $regularUsers = User::factory()->createMany([
+            ['name' => 'Alice Sharma',    'email' => 'alice@example.com'],
+            ['name' => 'Bob Thapa',       'email' => 'bob@example.com'],
+            ['name' => 'Carina Gurung',   'email' => 'carina@example.com'],
+            ['name' => 'Dev Bahadur',     'email' => 'dev@example.com'],
+            ['name' => 'Esha Rana',       'email' => 'esha@example.com'],
+            ['name' => 'Frank Limbu',     'email' => 'frank@example.com'],
+            ['name' => 'Gita Poudel',     'email' => 'gita@example.com'],
+            ['name' => 'Hari Adhikari',   'email' => 'hari@example.com'],
+            ['name' => 'Isha Koirala',    'email' => 'isha@example.com'],
+            ['name' => 'Jack Tamang',     'email' => 'jack@example.com'],
+            ['name' => 'Kiran Neupane',   'email' => 'kiran@example.com'],
+            ['name' => 'Laxmi Joshi',     'email' => 'laxmi@example.com'],
+            ['name' => 'Mohan Rai',       'email' => 'mohan@example.com'],
+            ['name' => 'Nisha Basnet',    'email' => 'nisha@example.com'],
+            ['name' => 'Om Singh',        'email' => 'om@example.com'],
+        ]);
 
-        $allUsers = collect([$admin, $admin2, ...$users]);
+        $allUsers = collect([$admin, $admin2, ...$regularUsers]);
 
-        // ─── Events ─────────────────────────────────────────────────────
-        // 5 events for the admin (various statuses)
-        $adminEvents = Event::factory(5)
-            ->sequence(
-                ['title' => 'Annual Tech Summit 2026',   'status' => 'published', 'event_date' => now()->addDays(30),  'registration_deadline' => now()->addDays(25)],
-                ['title' => 'Web Development Bootcamp',   'status' => 'published', 'event_date' => now()->addDays(60),  'registration_deadline' => now()->addDays(50)],
-                ['title' => 'AI & Machine Learning Conf', 'status' => 'draft',     'event_date' => now()->addDays(90),  'registration_deadline' => now()->addDays(80)],
-                ['title' => 'Startup Pitch Night',         'status' => 'published', 'event_date' => now()->addDays(15),  'registration_deadline' => now()->addDays(10)],
-                ['title' => 'Digital Marketing Workshop',  'status' => 'completed','event_date' => now()->subDays(10),  'registration_deadline' => now()->subDays(17)],
-            )
-            ->create(['user_id' => $admin->id]);
+        // ─── Events (50+ with generated banner images) ──────────────────
+        $this->call(EventSeeder::class);
 
-        // 5 events from other users
-        $otherEvents = Event::factory(5)
-            ->sequence(fn ($seq) => [
-                'user_id' => $allUsers->skip(($seq->index % 10) + 1)->first()->id,
-                'status' => 'published',
-            ])
-            ->create();
-
-        $allEvents = collect([...$adminEvents, ...$otherEvents]);
+        $allEvents = Event::all();
 
         // ─── Registrations & Tickets ────────────────────────────────────
-        // Each published/completed event gets registrations (max available users)
-        foreach ($allEvents->whereIn('status', ['published', 'completed']) as $event) {
-            $maxCount = min($allUsers->count(), $event->capacity > 0 ? $event->capacity : $allUsers->count());
-            $regCount = fake()->numberBetween(3, $maxCount);
+        $publishedEvents = $allEvents->whereIn('status', ['published', 'completed']);
+        $registeredUserIds = [];
 
+        foreach ($publishedEvents as $event) {
+            $maxCount = min($allUsers->count(), $event->capacity > 0 ? min($event->capacity, 20) : $allUsers->count());
+            $regCount = fake()->numberBetween(3, max(3, $maxCount));
             $registrants = $allUsers->random($regCount);
 
             foreach ($registrants as $registrant) {
@@ -73,12 +74,14 @@ class DatabaseSeeder extends Seeder
                 $isCancelled = fake()->boolean(10);
 
                 $status = $isCancelled ? 'cancelled' : ($isAttended ? 'attended' : 'registered');
-                $checkedIn = $isAttended ? fake()->dateTimeBetween($event->event_date, $event->event_date->format('Y-m-d') . ' 23:59:59') : null;
+                $checkedIn = $isAttended
+                    ? fake()->dateTimeBetween($event->event_date, $event->event_date->format('Y-m-d') . ' 23:59:59')
+                    : null;
 
                 $registration = Registration::create([
                     'event_id' => $event->id,
                     'user_id' => $registrant->id,
-                    'ticket_number' => $isCancelled ? $ticketNumber : $ticketNumber,
+                    'ticket_number' => $ticketNumber,
                     'status' => $status,
                     'checked_in_at' => $checkedIn,
                 ]);
@@ -102,6 +105,8 @@ class DatabaseSeeder extends Seeder
                     'status' => $ticketStatus,
                     'scanned_at' => $checkedIn,
                 ]);
+
+                $registeredUserIds[$registrant->id] = true;
             }
         }
 
@@ -116,14 +121,13 @@ class DatabaseSeeder extends Seeder
                 'user_id' => $reg->user_id,
                 'registration_id' => $reg->id,
                 'certificate_number' => $certNumber,
-                'certificate_path' => null, // No actual PDF generated for seed data
+                'certificate_path' => null,
                 'issued_at' => $reg->checked_in_at ?? now(),
             ]);
         }
 
         // ─── Notifications ──────────────────────────────────────────────
-        // Notify admin about registrations
-        $adminRegistrations = Registration::whereIn('event_id', $adminEvents->pluck('id'))
+        $adminRegistrations = Registration::whereIn('event_id', $allEvents->where('user_id', $admin->id)->pluck('id'))
             ->where('user_id', '!=', $admin->id)
             ->latest()
             ->take(10)
@@ -133,11 +137,15 @@ class DatabaseSeeder extends Seeder
             $admin->notify(new EventRegistrationNotification($reg->event, $reg->user, 'new_registration'));
         }
 
-        $this->command->info('Database seeded successfully!');
-        $this->command->info("Users: " . User::count());
-        $this->command->info("Events: " . Event::count());
-        $this->command->info("Registrations: " . Registration::count());
-        $this->command->info("Tickets: " . Ticket::count());
-        $this->command->info("Certificates: " . Certificate::count());
+        // ─── Summary ────────────────────────────────────────────────────
+        $this->command->info('────────────────────────────────────────');
+        $this->command->info('  ✅ Database seeded successfully!');
+        $this->command->info('────────────────────────────────────────');
+        $this->command->info("  Users:          " . User::count());
+        $this->command->info("  Events:         " . Event::count());
+        $this->command->info("  Registrations:  " . Registration::count());
+        $this->command->info("  Tickets:        " . Ticket::count());
+        $this->command->info("  Certificates:   " . Certificate::count());
+        $this->command->info('────────────────────────────────────────');
     }
 }

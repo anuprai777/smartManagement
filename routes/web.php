@@ -5,6 +5,7 @@ use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PreferencesController;
 use App\Http\Controllers\RegistrationController;
 use App\Models\Event;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +57,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
     Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllRead');
+
+    // Preferences / Interests
+    Route::get('/preferences', [PreferencesController::class, 'edit'])->name('preferences.edit');
+    Route::patch('/preferences', [PreferencesController::class, 'update'])->name('preferences.update');
 });
 
 // Public event detail (placed AFTER resource routes so /events/create matches the resource route first)

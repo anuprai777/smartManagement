@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Registration;
 use App\Models\Certificate;
+use App\Services\EventRecommendationService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(EventRecommendationService $recommendationService)
     {
         $user = auth()->user();
 
@@ -51,6 +52,9 @@ class DashboardController extends Controller
             ->orderBy('month')
             ->pluck('total', 'month');
 
+        // AI-powered event recommendations
+        $recommendedEvents = $recommendationService->getRecommendations($user, 6);
+
         return view('dashboard.index', compact(
             'myEventsCount',
             'upcomingEventsCount',
@@ -58,7 +62,8 @@ class DashboardController extends Controller
             'totalAttendees',
             'myRegistrations',
             'recentEvents',
-            'monthlyTrend'
+            'monthlyTrend',
+            'recommendedEvents'
         ));
     }
 }

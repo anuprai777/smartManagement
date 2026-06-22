@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use Database\Seeders\Helpers\EventBannerGenerator;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -58,7 +59,7 @@ class EventFactory extends Factory
             'registration_deadline' => $deadline,
             'capacity' => fake()->randomElement([50, 100, 150, 200, 300, 500]),
             'status' => fake()->randomElement(['draft', 'published', 'published', 'published', 'completed']),
-            'banner_image' => null,
+            'banner_image' => EventBannerGenerator::generate($title, EventBannerGenerator::detectCategory($title)),
         ];
     }
 
@@ -89,5 +90,18 @@ class EventFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'event_date' => fake()->dateTimeBetween('+1 day', '+3 months'),
         ]);
+    }
+
+    public function withBanner(string $category = 'general'): static
+    {
+        return $this->afterCreating(function ($event) use ($category) {
+            if (! $event->banner_image) {
+                $cat = $category === 'general'
+                    ? EventBannerGenerator::detectCategory($event->title)
+                    : $category;
+                $event->banner_image = EventBannerGenerator::generate($event->title, $cat);
+                $event->save();
+            }
+        });
     }
 }

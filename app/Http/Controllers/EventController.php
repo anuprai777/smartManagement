@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Services\EventRecommendationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -122,7 +123,7 @@ class EventController extends Controller
             ->with('success', 'Event published successfully!');
     }
 
-    public function browse()
+    public function browse(EventRecommendationService $recommendationService)
     {
         $events = Event::published()
             ->upcoming()
@@ -130,6 +131,12 @@ class EventController extends Controller
             ->withCount('registrations')
             ->latest('event_date')
             ->paginate(12);
-        return view('events.browse', compact('events'));
+
+        $recommendedEvents = collect();
+        if (auth()->check()) {
+            $recommendedEvents = $recommendationService->getRecommendations(auth()->user(), 6);
+        }
+
+        return view('events.browse', compact('events', 'recommendedEvents'));
     }
 }

@@ -11,6 +11,79 @@
         </div>
     </div>
 
+    <!-- AI-Powered Recommendations -->
+    @auth
+    @if($recommendedEvents->isNotEmpty())
+    <div class="mb-10">
+        <div class="flex items-center gap-2.5 mb-5">
+            <div class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-sm">
+                <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>
+                </svg>
+            </div>
+            <div>
+                <div class="flex items-center gap-3">
+                    <h2 class="text-lg font-bold text-gray-900">Recommended for You</h2>
+                    <a href="{{ route('preferences.edit') }}" class="text-xs font-medium text-amber-600 hover:text-amber-800 transition flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/>
+                        </svg>
+                        Customize Interests
+                    </a>
+                </div>
+                <p class="text-xs text-gray-400">AI-powered picks based on your interests and registration history</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            @foreach($recommendedEvents as $event)
+            <div class="bg-white rounded-xl shadow-sm border border-amber-200/60 overflow-hidden hover:shadow-md transition group">
+                @if($event->banner_image)
+                <img src="{{ Storage::url($event->banner_image) }}" alt="{{ $event->title }}" class="w-full h-36 object-cover">
+                @else
+                <div class="w-full h-36 bg-gradient-to-br from-amber-50 to-orange-100 flex items-center justify-center">
+                    <svg class="w-12 h-12 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>
+                    </svg>
+                </div>
+                @endif
+                <div class="p-4">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span class="inline-flex items-center px-2 py-0.5 text-[10px] font-medium rounded-full bg-amber-100 text-amber-700">AI Pick</span>
+                        <span class="text-xs text-gray-400">{{ $event->event_date->format('M d, Y') }}</span>
+                    </div>
+                    <h3 class="text-sm font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition">
+                        <a href="{{ route('events.show', $event) }}">{{ $event->title }}</a>
+                    </h3>
+                    @if($event->venue)
+                    <p class="text-xs text-gray-400 truncate">{{ $event->venue }}</p>
+                    @endif
+                    <div class="flex items-center justify-between mt-3">
+                        <span class="text-xs text-gray-400">
+                            {{ $event->registrations_count }}/{{ $event->capacity > 0 ? $event->capacity : '∞' }} registered
+                        </span>
+                        <a href="{{ route('events.show', $event) }}" class="text-xs font-medium text-indigo-600 hover:text-indigo-800">
+                            View Details →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+    @endif
+    @endauth
+
+    <!-- All Events -->
+    @auth
+    @if($recommendedEvents->isNotEmpty())
+    <div class="flex items-center gap-3 mb-6">
+        <div class="flex-1 h-px bg-gray-200"></div>
+        <span class="text-sm font-medium text-gray-400">All Events</span>
+        <div class="flex-1 h-px bg-gray-200"></div>
+    </div>
+    @endif
+    @endauth
+
     @if($events->isEmpty())
     <div class="text-center py-16">
         <svg class="w-20 h-20 mx-auto text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
