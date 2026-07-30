@@ -28,7 +28,3 @@ class CertificateFactory extends Factory
         ];
     }
 }
-            //
-        ];
-    }
-}

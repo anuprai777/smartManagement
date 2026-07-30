@@ -52,6 +52,11 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
+        // Private events should only be visible to the organizer
+        if ($event->isPrivate() && (!auth()->check() || auth()->id() !== $event->user_id)) {
+            abort(404);
+        }
+
         $event->loadCount('registrations');
         $userRegistration = null;
 

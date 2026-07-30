@@ -18,13 +18,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // ─── Create users ───────────────────────────────────────────────
+        // Create admin user
         $admin = User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'is_admin' => true,
-        ]);
-
-        $admin2 = User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
             'is_admin' => true,
@@ -32,7 +27,7 @@ class DatabaseSeeder extends Seeder
 
         // Create variety of users with different names for realism
         $regularUsers = User::factory()->createMany([
-            ['name' => 'Alice Sharma',    'email' => 'alice@example.com'],
+            ['name' => 'Test User',       'email' => 'test@example.com'],
             ['name' => 'Bob Thapa',       'email' => 'bob@example.com'],
             ['name' => 'Carina Gurung',   'email' => 'carina@example.com'],
             ['name' => 'Dev Bahadur',     'email' => 'dev@example.com'],
@@ -49,7 +44,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Om Singh',        'email' => 'om@example.com'],
         ]);
 
-        $allUsers = collect([$admin, $admin2, ...$regularUsers]);
+        $allUsers = collect([$admin, ...$regularUsers]);
 
         // ─── Events (50+ with generated banner images) ──────────────────
         $this->call(EventSeeder::class);

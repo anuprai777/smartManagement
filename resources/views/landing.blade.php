@@ -39,21 +39,16 @@
 
     <!-- Hero Section -->
     <section class="relative overflow-hidden min-h-screen-minus-nav flex items-center">
-        <!-- Background gradient -->
         <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-purple-50 pointer-events-none"></div>
         <div class="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 bg-indigo-200/30 rounded-full blur-3xl pointer-events-none max-sm:hidden"></div>
-        <div class="absolute bottom-0 left-0 -translate-x-1/4 translate-y-1/4 w-96 h-96 bg-purple-200/30 rounded-full blur-3xl pointer-events-none max-sm:hidden"></div>
-        <div class="absolute top-1/3 left-1/4 -translate-x-1/2 w-72 h-72 bg-pink-200/20 rounded-full blur-3xl pointer-events-none max-sm:hidden"></div>
-        <div class="absolute bottom-1/4 right-1/3 w-64 h-64 bg-amber-200/25 rounded-full blur-3xl pointer-events-none max-sm:hidden"></div>
-        <div class="absolute top-1/2 left-2/3 w-48 h-48 bg-emerald-200/20 rounded-full blur-3xl pointer-events-none max-sm:hidden"></div>
 
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 w-full">
             <div class="max-w-3xl mx-auto text-center">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 rounded-full text-sm font-medium mb-6 shadow-sm border border-indigo-200/50">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 rounded-full text-sm font-medium mb-6 shadow-sm border border-indigo-200/50 animate-fade-in">
                     <span class="w-2 h-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full animate-pulse"></span>
                     Smart event management platform
                 </div>
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight animate-fade-in-up">
                     Manage Events
                     <span class="block bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Smarter, Not Harder</span>
                 </h1>
@@ -85,11 +80,7 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-20 sm:py-28 bg-white relative overflow-hidden">
-        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-indigo-300 to-transparent"></div>
-        <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
-        <div class="absolute -left-32 top-1/2 w-64 h-64 bg-indigo-100/40 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -right-32 bottom-1/4 w-64 h-64 bg-purple-100/40 rounded-full blur-3xl pointer-events-none"></div>
+    <section class="py-20 sm:py-28 bg-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 rounded-full text-sm font-medium mb-4 shadow-sm border border-indigo-200/50">
@@ -99,86 +90,50 @@
                 <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">Everything You Need</h2>
                 <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">From registration to analytics — a complete event management ecosystem powered by smart technology.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
                 <!-- Feature 1 - Online Event Registration -->
-                <div class="relative p-6 bg-gradient-to-br from-indigo-50 to-white rounded-2xl border border-indigo-100/50 hover:shadow-lg transition flex flex-col group">
-                    <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition">
-                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+                <div class="relative p-6 bg-white rounded-2xl border border-gray-100 hover:shadow-md transition flex flex-col group">
+                    <div class="w-11 h-11 bg-indigo-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <svg class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Online Event Registration</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Seamless registration with instant confirmation, real-time capacity tracking, and automated waitlist management for sold-out events.</p>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Online Registration</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Seamless sign-ups with instant confirmation and real-time capacity tracking.</p>
                 </div>
 
-                <!-- Feature 2 - QR Code Ticket Generation -->
-                <div class="relative p-6 bg-gradient-to-br from-purple-50 to-white rounded-2xl border border-purple-100/50 hover:shadow-lg transition flex flex-col group">
-                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition">
-                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                <!-- Feature 2 - QR Ticketing -->
+                <div class="relative p-6 bg-white rounded-2xl border border-gray-100 hover:shadow-md transition flex flex-col group">
+                    <div class="w-11 h-11 bg-purple-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <svg class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">QR Code Ticket Generation</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Each registration generates a unique QR-coded ticket with secure encryption, making check-ins fast, fraud-proof, and effortless.</p>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">QR Ticketing</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Unique QR-coded tickets for every attendee with fast, fraud-proof scan verification.</p>
                 </div>
 
-                <!-- Feature 3 - QR Scanning for Attendance -->
-                <div class="relative p-6 bg-gradient-to-br from-emerald-50 to-white rounded-2xl border border-emerald-100/50 hover:shadow-lg transition flex flex-col group">
-                    <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition">
-                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                <!-- Feature 3 - Attendance Scanning -->
+                <div class="relative p-6 bg-white rounded-2xl border border-gray-100 hover:shadow-md transition flex flex-col group">
+                    <div class="w-11 h-11 bg-emerald-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">QR Scanning for Attendance</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Lightning-fast QR scanning at the door with real-time attendance sync. Verify tickets instantly and track entry in real time.</p>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Door Scanning</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Lightning-fast QR scanning at the door with real-time attendance tracking.</p>
                 </div>
 
-                <!-- Feature 4 - Automated Certificate Generation -->
-                <div class="relative p-6 bg-gradient-to-br from-amber-50 to-white rounded-2xl border border-amber-100/50 hover:shadow-lg transition flex flex-col group">
-                    <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition">
-                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                <!-- Feature 4 - Digital Certificates -->
+                <div class="relative p-6 bg-white rounded-2xl border border-gray-100 hover:shadow-md transition flex flex-col group">
+                    <div class="w-11 h-11 bg-amber-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <svg class="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Automated Certificate Generation</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Beautiful digital certificates generated and issued automatically after attendance. Custom designs with instant download and sharing.</p>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Digital Certificates</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Beautiful certificates issued automatically after attendance, ready to download and share.</p>
                 </div>
 
-                <!-- Feature 5 - Event Analytics Dashboard -->
-                <div class="relative p-6 bg-gradient-to-br from-rose-50 to-white rounded-2xl border border-rose-100/50 hover:shadow-lg transition flex flex-col group">
-                    <div class="w-12 h-12 bg-gradient-to-br from-rose-500 to-rose-600 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition">
-                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                <!-- Feature 5 - AI Recommendations -->
+                <div class="relative p-6 bg-white rounded-2xl border border-gray-100 hover:shadow-md transition flex flex-col group">
+                    <div class="w-11 h-11 bg-orange-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <svg class="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Event Analytics Dashboard</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Track total registrations, attendance percentages, and event popularity trends. Data-driven insights to optimize your events.</p>
-                </div>
-
-                <!-- Feature 6 - Smart Notifications -->
-                <div class="relative p-6 bg-gradient-to-br from-sky-50 to-white rounded-2xl border border-sky-100/50 hover:shadow-lg transition flex flex-col group">
-                    <div class="w-12 h-12 bg-gradient-to-br from-sky-500 to-sky-600 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition">
-                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Smart Notifications System</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Get booking confirmations with venue & time details, attendance milestone alerts like "You got 80/100 attendance", and event reminders.</p>
-                </div>
-
-                <!-- Feature 7 - Participants Dashboard -->
-                <div class="relative p-6 bg-gradient-to-br from-teal-50 to-white rounded-2xl border border-teal-100/50 hover:shadow-lg transition flex flex-col group">
-                    <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition">
-                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Participants Dashboard</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Your central hub to view all registered events, download tickets, and access certificates — everything in one place.</p>
-                </div>
-
-                <!-- Feature 8 - AI-Powered Recommendations -->
-                <div class="relative p-6 bg-gradient-to-br from-orange-50 to-white rounded-2xl border border-orange-100/50 hover:shadow-lg transition flex flex-col group">
-                    <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition">
-                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">AI-Powered Recommendations</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Smart event suggestions based on your interests and search history. Discover similar upcoming events tailored just for you.</p>
-                </div>
-
-                <!-- Feature 9 - Event Creation & Management -->
-                <div class="relative p-6 bg-gradient-to-br from-cyan-50 to-white rounded-2xl border border-cyan-100/50 hover:shadow-lg transition flex flex-col group">
-                    <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition">
-                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Event Creation & Management</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Rich event builder with banners, venue details, scheduling, capacity controls, and one-click publishing to go live instantly.</p>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">AI Recommendations</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Smart event suggestions based on your interests so you never miss what matters.</p>
                 </div>
             </div>
         </div>
@@ -186,9 +141,7 @@
 
     <!-- Upcoming Events Section -->
     @if($upcomingEvents->isNotEmpty())
-    <section class="py-20 sm:py-28 relative overflow-hidden">
-        <div class="absolute -right-32 top-1/3 w-72 h-72 bg-amber-100/40 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -left-32 bottom-1/4 w-64 h-64 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none"></div>
+    <section class="py-20 sm:py-28 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12">
                 <div>
@@ -246,13 +199,7 @@
     @endif
 
     <!-- CTA Section -->
-    <section class="py-28 sm:py-36 lg:py-52 bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-700 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-        <div class="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
-        <div class="absolute top-1/3 left-1/4 w-48 h-48 bg-pink-400/10 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-1/3 right-1/4 w-48 h-48 bg-amber-400/10 rounded-full blur-3xl"></div>
-        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-        <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+    <section class="py-24 bg-gradient-to-br from-indigo-600 to-purple-700 relative overflow-hidden">
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">Ready to Simplify Your Event Management?</h2>
             <p class="mt-5 text-lg sm:text-xl text-indigo-200 max-w-2xl mx-auto">Join thousands of organizers who use SmartEvent to create, manage, and deliver amazing event experiences.</p>

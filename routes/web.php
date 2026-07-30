@@ -66,12 +66,36 @@ Route::middleware('auth')->group(function () {
 // Public event detail (placed AFTER resource routes so /events/create matches the resource route first)
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
-// Admin routes
+// Admin routes — full management suite
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
+
+    // Users
     Route::get('/users', [\App\Http\Controllers\AdminController::class, 'users'])->name('users');
-    Route::patch('/users/{user}/toggle-admin', [\App\Http\Controllers\AdminController::class, 'toggleAdmin'])->name('users.toggleAdmin');
     Route::delete('/users/{user}', [\App\Http\Controllers\AdminController::class, 'deleteUser'])->name('users.delete');
+
+    // Events
+    Route::get('/events', [\App\Http\Controllers\AdminController::class, 'events'])->name('events');
+    Route::delete('/events/{event}', [\App\Http\Controllers\AdminController::class, 'deleteEvent'])->name('events.delete');
+
+    // Registrations
+    Route::get('/registrations', [\App\Http\Controllers\AdminController::class, 'registrations'])->name('registrations');
+    Route::delete('/registrations/{registration}', [\App\Http\Controllers\AdminController::class, 'deleteRegistration'])->name('registrations.delete');
+
+    // Tickets
+    Route::get('/tickets', [\App\Http\Controllers\AdminController::class, 'tickets'])->name('tickets');
+    Route::delete('/tickets/{ticket}', [\App\Http\Controllers\AdminController::class, 'deleteTicket'])->name('tickets.delete');
+
+    // Certificates
+    Route::get('/certificates', [\App\Http\Controllers\AdminController::class, 'certificates'])->name('certificates');
+    Route::delete('/certificates/{certificate}', [\App\Http\Controllers\AdminController::class, 'deleteCertificate'])->name('certificates.delete');
+
+    // Earnings
+    Route::get('/earnings', [\App\Http\Controllers\AdminController::class, 'earnings'])->name('earnings');
+
+    // Settings
+    Route::get('/settings', [\App\Http\Controllers\AdminController::class, 'settings'])->name('settings');
+    Route::patch('/settings', [\App\Http\Controllers\AdminController::class, 'updateSettings'])->name('settings.update');
 });
 
 // Authentication routes (login/register)

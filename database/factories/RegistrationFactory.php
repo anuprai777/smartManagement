@@ -41,7 +41,3 @@ class RegistrationFactory extends Factory
         ]);
     }
 }
-            //
-        ];
-    }
-}

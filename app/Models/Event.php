@@ -22,6 +22,7 @@ class Event extends Model
         'status',
         'visibility',
         'banner_image',
+        'price',
     ];
 
     protected function casts(): array
@@ -30,6 +31,7 @@ class Event extends Model
             'event_date' => 'datetime',
             'registration_deadline' => 'datetime',
             'visibility' => 'string',
+            'price' => 'decimal:2',
         ];
     }
 
