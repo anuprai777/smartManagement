@@ -80,14 +80,24 @@
                     @if($event->venue)
                     <div class="flex items-start gap-3">
                         <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
+                            @if(($event->venue_type ?? 'offline') === 'online')
+                            <svg class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.38-3.72a4 4 0 010-5.657l4-4a4 4 0 015.656 5.656l-1.1 1.1"/>
+                            </svg>
+                            @else
                             <svg class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
+                            @endif
                         </div>
                         <div>
-                            <p class="text-sm text-gray-500">Venue</p>
+                            <p class="text-sm text-gray-500">{{ ($event->venue_type ?? 'offline') === 'online' ? 'Online Event' : 'Venue' }}</p>
+                            @if(($event->venue_type ?? 'offline') === 'online')
+                            <a href="{{ $event->venue }}" target="_blank" rel="noopener" class="font-medium text-indigo-600 hover:text-indigo-800 hover:underline break-all">{{ $event->venue }}</a>
+                            @else
                             <p class="font-medium text-gray-900">{{ $event->venue }}</p>
+                            @endif
                         </div>
                     </div>
                     @endif
@@ -145,7 +155,7 @@
         <!-- Sidebar -->
         <div class="space-y-6">
             <!-- Registration Card -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-24">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-24" x-data="{ openQrModal: false }">
                 @auth
                     @if(auth()->id() === $event->user_id)
                         <!-- Organizer Actions -->
@@ -156,6 +166,15 @@
                                 </svg>
                                 Edit Event
                             </a>
+                            @if($event->isPrivate())
+                            <button @click="openQrModal = true"
+                                class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-fuchsia-600 text-white font-medium rounded-lg hover:bg-fuchsia-700 transition">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+                                </svg>
+                                Registration QR Code
+                            </button>
+                            @endif
                             <a href="{{ route('attendance.scan') }}" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 transition">
                                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
@@ -250,8 +269,89 @@
                         </p>
                     </div>
                 @endauth
+
+                <!-- Registration QR Code Modal (private events) -->
+                <div x-show="openQrModal" x-cloak
+                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 z-50 flex items-center justify-center p-4">
+                    <div class="absolute inset-0 bg-black/50" @click="openQrModal = false"></div>
+                    <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-fuchsia-100 rounded-xl flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-fuchsia-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-bold text-gray-900">Registration QR Code</h3>
+                                    <p class="text-xs text-gray-500">{{ $event->title }}</p>
+                                </div>
+                            </div>
+                            <button @click="openQrModal = false" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                            </button>
+                        </div>
+
+                        <div class="bg-white border-2 border-dashed border-fuchsia-200 rounded-2xl p-5 mb-4">
+                            <div class="flex justify-center">
+                                <img src="{{ route('events.join.qr', $event) }}" alt="Registration QR Code"
+                                    class="w-48 h-48 rounded-lg shadow-sm">
+                            </div>
+                            <p class="text-center text-xs text-gray-500 mt-3">
+                                Attendees scan this QR to register themselves — instantly issued with a ticket.
+                            </p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wide">Shareable Link</label>
+                            <div class="flex gap-2">
+                                <input type="text" readonly value="{{ route('events.join', $event) }}"
+                                    id="join-link-input"
+                                    class="flex-1 px-3 py-2 border border-gray-200 rounded-xl text-xs text-gray-600 bg-gray-50 focus:outline-none"
+                                    onclick="this.select()">
+                                <button type="button" onclick="copyJoinLink()"
+                                    class="px-3 py-2 bg-fuchsia-600 text-white text-xs font-medium rounded-xl hover:bg-fuchsia-700 transition shrink-0">
+                                    Copy
+                                </button>
+                            </div>
+                            <p class="text-[10px] text-gray-400 mt-1.5">Tip: print this QR at the entrance, or send the link to your guests.</p>
+                        </div>
+
+                        <div class="flex items-center gap-3 pt-4">
+                            <button type="button" @click="openQrModal = false"
+                                class="flex-1 px-4 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition">
+                                Close
+                            </button>
+                            <a href="{{ route('events.join.qr', $event) }}" target="_blank"
+                                class="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-fuchsia-600 hover:bg-fuchsia-700 rounded-xl transition text-center">
+                                Download QR
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function copyJoinLink() {
+    const input = document.getElementById('join-link-input');
+    if (!input) return;
+    input.select();
+    input.setSelectionRange(0, 99999);
+    navigator.clipboard?.writeText(input.value).then(() => {
+        const btn = event?.target;
+        if (btn) {
+            const original = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => { btn.textContent = original; }, 1500);
+        }
+    }).catch(() => {});
+}
+</script>
+@endpush

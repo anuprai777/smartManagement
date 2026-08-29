@@ -103,14 +103,30 @@
                     Settings
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                        <label for="venue" class="block text-sm font-medium text-gray-700 mb-1.5">Venue / Location</label>
-                        <input type="text" name="venue" id="venue" value="{{ old('venue') }}"
+                    <div x-data="{ venueType: @js(old('venue_type', 'offline')) }">
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">Venue Type <span class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-2 gap-2 mb-2.5">
+                            <label class="relative flex items-center justify-center gap-2 px-3 py-2.5 border rounded-xl cursor-pointer transition select-none text-sm font-medium" :class="venueType === 'online' ? 'border-indigo-500 bg-indigo-50/50 ring-1 ring-indigo-500 text-indigo-700' : 'border-gray-200 hover:border-gray-300 text-gray-600'">
+                                <input type="radio" name="venue_type" value="online" class="sr-only" :checked="venueType === 'online'" @change="venueType = 'online'">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.38-3.72a4 4 0 010-5.657l4-4a4 4 0 015.656 5.656l-1.1 1.1"/></svg>
+                                Online
+                            </label>
+                            <label class="relative flex items-center justify-center gap-2 px-3 py-2.5 border rounded-xl cursor-pointer transition select-none text-sm font-medium" :class="venueType === 'offline' ? 'border-indigo-500 bg-indigo-50/50 ring-1 ring-indigo-500 text-indigo-700' : 'border-gray-200 hover:border-gray-300 text-gray-600'">
+                                <input type="radio" name="venue_type" value="offline" class="sr-only" :checked="venueType === 'offline'" @change="venueType = 'offline'">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                Offline
+                            </label>
+                        </div>
+                        <input type="text" name="venue" id="venue" value="{{ old('venue') }}" required
                             class="input-field @error('venue') input-error @enderror"
-                            placeholder="Online or physical location">
+                            :placeholder="venueType === 'online' ? 'e.g. https://zoom.us/j/123 or meeting link' : 'e.g. Kathmandu Convention Center, Kathmandu'">
+                        @error('venue_type')
+                        <p class="mt-1.5 text-sm text-red-600 flex items-center gap-1"><svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>{{ $message }}</p>
+                        @enderror
                         @error('venue')
                         <p class="mt-1.5 text-sm text-red-600 flex items-center gap-1"><svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>{{ $message }}</p>
                         @enderror
+                        <p class="mt-1 text-xs text-gray-400" x-text="venueType === 'online' ? 'Enter the meeting link or platform where the event takes place.' : 'Enter the physical address or venue name.'"></p>
                     </div>
 
                     <div>
@@ -145,23 +161,23 @@
             </div>
 
             <!-- Visibility -->
-            <div>
+            <div x-data="{ visibility: @js(old('visibility', 'public')) }">
                 <label class="block text-sm font-medium text-gray-700 mb-3">Event Visibility</label>
                 <div class="grid grid-cols-2 gap-3">
-                    <label class="relative flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50/50 has-[:checked]:ring-1 has-[:checked]:ring-indigo-500 border-gray-200 hover:border-gray-300">
-                        <input type="radio" name="visibility" value="public" class="sr-only peer" {{ old('visibility', 'public') === 'public' ? 'checked' : '' }}>
-                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center peer-checked:border-indigo-500">
-                            <div class="w-2.5 h-2.5 rounded-full bg-indigo-500 hidden peer-checked:block"></div>
+                    <label class="relative flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition select-none" :class="visibility === 'public' ? 'border-indigo-500 bg-indigo-50/50 ring-1 ring-indigo-500' : 'border-gray-200 hover:border-gray-300'">
+                        <input type="radio" name="visibility" value="public" class="sr-only" :checked="visibility === 'public'" @change="visibility = 'public'">
+                        <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center transition" :class="visibility === 'public' ? 'border-indigo-500' : 'border-gray-300'">
+                            <div class="w-2.5 h-2.5 rounded-full bg-indigo-500 transition" :class="visibility === 'public' ? 'block' : 'hidden'"></div>
                         </div>
                         <div>
                             <span class="block text-sm font-semibold text-gray-900">Public</span>
                             <span class="block text-xs text-gray-500">Visible to everyone. Appears in listings.</span>
                         </div>
                     </label>
-                    <label class="relative flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50/50 has-[:checked]:ring-1 has-[:checked]:ring-indigo-500 border-gray-200 hover:border-gray-300">
-                        <input type="radio" name="visibility" value="private" class="sr-only peer" {{ old('visibility') === 'private' ? 'checked' : '' }}>
-                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center peer-checked:border-indigo-500">
-                            <div class="w-2.5 h-2.5 rounded-full bg-indigo-500 hidden peer-checked:block"></div>
+                    <label class="relative flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition select-none" :class="visibility === 'private' ? 'border-indigo-500 bg-indigo-50/50 ring-1 ring-indigo-500' : 'border-gray-200 hover:border-gray-300'">
+                        <input type="radio" name="visibility" value="private" class="sr-only" :checked="visibility === 'private'" @change="visibility = 'private'">
+                        <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center transition" :class="visibility === 'private' ? 'border-indigo-500' : 'border-gray-300'">
+                            <div class="w-2.5 h-2.5 rounded-full bg-indigo-500 transition" :class="visibility === 'private' ? 'block' : 'hidden'"></div>
                         </div>
                         <div>
                             <span class="block text-sm font-semibold text-gray-900">Private</span>

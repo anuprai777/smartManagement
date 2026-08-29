@@ -70,7 +70,12 @@
                                         </span>
                                         @endif
                                     </div>
-                                    <p class="text-xs text-gray-400">{{ $event->venue ?? 'No venue' }}</p>
+                                    <p class="text-xs text-gray-400 flex items-center gap-1.5">
+                                        <span class="inline-flex items-center px-1.5 py-0.5 text-[9px] font-semibold rounded-full {{ ($event->venue_type ?? 'offline') === 'online' ? 'bg-violet-100 text-violet-700' : 'bg-emerald-100 text-emerald-700' }}">
+                                            {{ ($event->venue_type ?? 'offline') === 'online' ? 'Online' : 'Venue' }}
+                                        </span>
+                                        {{ $event->venue ?? 'No venue' }}
+                                    </p>
                                 </div>
                             </div>
                         </td>
