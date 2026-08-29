@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Registration;
-use App\Models\Certificate;
 use App\Services\EventRecommendationService;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -42,16 +40,6 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        // Monthly registration trend (last 6 months)
-        $monthlyTrend = Registration::whereIn('event_id', function ($q) use ($user) {
-            $q->select('id')->from('events')->where('user_id', $user->id);
-        })
-            ->select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') as month"), DB::raw('count(*) as total'))
-            ->where('created_at', '>=', now()->subMonths(6))
-            ->groupBy('month')
-            ->orderBy('month')
-            ->pluck('total', 'month');
-
         // AI-powered event recommendations
         $recommendedEvents = $recommendationService->getRecommendations($user, 6);
 
@@ -62,7 +50,6 @@ class DashboardController extends Controller
             'totalAttendees',
             'myRegistrations',
             'recentEvents',
-            'monthlyTrend',
             'recommendedEvents'
         ));
     }

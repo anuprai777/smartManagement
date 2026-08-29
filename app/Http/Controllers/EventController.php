@@ -28,7 +28,8 @@ class EventController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'venue' => 'nullable|string|max:255',
+            'venue_type' => 'required|in:online,offline',
+            'venue' => 'required|string|max:255',
             'event_date' => 'required|date|after:now',
             'registration_deadline' => 'nullable|date|before:event_date',
             'capacity' => 'required|integer|min:0',
@@ -82,7 +83,8 @@ class EventController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'venue' => 'nullable|string|max:255',
+            'venue_type' => 'required|in:online,offline',
+            'venue' => 'required|string|max:255',
             'event_date' => 'required|date',
             'registration_deadline' => 'nullable|date|before:event_date',
             'capacity' => 'required|integer|min:0',
