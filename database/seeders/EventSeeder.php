@@ -149,6 +149,7 @@ class EventSeeder extends Seeder
                     'title' => $title,
                     'description' => "Join us for an unforgettable event: {$title}. {$descriptionSuffix}",
                     'venue' => $venue,
+                    'venue_type' => str_contains(strtolower($venue), 'online') ? 'online' : 'offline',
                     'event_date' => $dateOffset,
                     'registration_deadline' => $deadline,
                     'capacity' => $capacity,

@@ -25,6 +25,10 @@ Route::get('/', function () {
 
 Route::get('/events/browse', [EventController::class, 'browse'])->name('events.browse');
 
+// Join a private event via registration QR / link (public so attendees can scan and register)
+Route::get('/events/{event}/join', [RegistrationController::class, 'join'])->name('events.join');
+Route::get('/events/{event}/join-qr', [RegistrationController::class, 'joinQr'])->name('events.join.qr');
+
 // Authenticated routes
 Route::middleware('auth')->group(function () {
     // Dashboard
@@ -37,6 +41,7 @@ Route::middleware('auth')->group(function () {
     // Registrations
     Route::get('/my-registrations', [RegistrationController::class, 'myRegistrations'])->name('registrations.my');
     Route::post('/events/{event}/register', [RegistrationController::class, 'register'])->name('events.register');
+    Route::post('/events/{event}/tickets/generate', [RegistrationController::class, 'generateTicket'])->name('events.tickets.generate');
     Route::get('/registrations/{registration}/ticket', [RegistrationController::class, 'showTicket'])->name('registrations.ticket');
     Route::delete('/registrations/{registration}/cancel', [RegistrationController::class, 'cancel'])->name('registrations.cancel');
 

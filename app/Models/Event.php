@@ -16,6 +16,7 @@ class Event extends Model
         'title',
         'description',
         'venue',
+        'venue_type',
         'event_date',
         'registration_deadline',
         'capacity',
@@ -31,6 +32,7 @@ class Event extends Model
             'event_date' => 'datetime',
             'registration_deadline' => 'datetime',
             'visibility' => 'string',
+            'venue_type' => 'string',
             'price' => 'decimal:2',
         ];
     }

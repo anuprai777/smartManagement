@@ -39,22 +39,26 @@ class EventFactory extends Factory
         $startDate = fake()->dateTimeBetween('-2 months', '+4 months');
         $deadline = (clone $startDate)->modify('-7 days');
 
+        $venues = [
+            'Kathmandu Convention Center' => 'offline',
+            'Hotel Yak & Yeti, Kathmandu' => 'offline',
+            'Soaltee Hotel, Kathmandu' => 'offline',
+            'Online (Zoom)' => 'online',
+            'Baneshwor Hall, Kathmandu' => 'offline',
+            'Pulchowk Engineering Campus' => 'offline',
+            'Tribhuvan University Auditorium' => 'offline',
+            'Bouddha Community Center' => 'offline',
+            'Lakeside Resort, Pokhara' => 'offline',
+            'Hyatt Regency, Kathmandu' => 'offline',
+        ];
+        $venue = fake()->randomElement(array_keys($venues));
+
         return [
             'user_id' => User::factory(),
             'title' => $title,
             'description' => fake()->paragraphs(3, true),
-            'venue' => fake()->randomElement([
-                'Kathmandu Convention Center',
-                'Hotel Yak & Yeti, Kathmandu',
-                'Soaltee Hotel, Kathmandu',
-                'Online (Zoom)',
-                'Baneshwor Hall, Kathmandu',
-                'Pulchowk Engineering Campus',
-                'Tribhuvan University Auditorium',
-                'Bouddha Community Center',
-                'Lakeside Resort, Pokhara',
-                'Hyatt Regency, Kathmandu',
-            ]),
+            'venue' => $venue,
+            'venue_type' => $venues[$venue],
             'event_date' => $startDate,
             'registration_deadline' => $deadline,
             'capacity' => fake()->randomElement([50, 100, 150, 200, 300, 500]),
